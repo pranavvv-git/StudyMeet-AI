@@ -1,766 +1,258 @@
-# 📚 StudyMate AI
+# StudyMate AI
 
-> An AI-powered personalized learning platform that transforms your study materials into an interactive learning experience using Generative AI, RAG, quizzes, and flashcards.
+An AI-powered personalized learning platform that transforms your study materials into an interactive learning experience using Generative AI and Retrieval-Augmented Generation (RAG).
 
----
+## Overview
 
-# 🚀 Overview
+StudyMate AI is a full-stack learning platform where students can upload their study materials and use AI-powered tools to understand and practice their subjects.
 
-StudyMate AI is a full-stack AI-powered learning platform designed to help students study using their own documents.
+Upload PDF, DOCX, PPTX, and TXT files to create a personal knowledge base and interact with your documents.
 
-Users can upload study materials such as:
+## Features
 
-- PDF
-- DOCX
-- PPTX
-- TXT
+- Document Management: Upload and manage study materials.
+- AI Tutor: Ask questions and get contextual answers from your documents.
+- Smart Quiz: Generate MCQ-based quizzes with explanations and score calculation.
+- AI Flashcards: Automatically generate flashcards from uploaded documents.
+- Dashboard: Track documents, conversations, and learning activity.
+- Authentication: Secure login and registration using JWT and bcrypt.
+- RAG-based Search: Retrieve relevant document information using semantic search.
 
-The system processes these documents, converts them into embeddings, stores them in FAISS, and uses Retrieval-Augmented Generation (RAG) to provide contextual AI responses.
+## Tech Stack
 
-StudyMate AI combines:
+| Layer | Technologies |
+|---|---|
+| Frontend | React, Vite, Tailwind CSS |
+| Backend | Node.js, Express.js |
+| Database | MongoDB, Mongoose |
+| AI / RAG | Python, FastAPI, LangChain |
+| Embeddings | Sentence Transformers (MiniLM) |
+| Vector Database | FAISS |
+| LLM | GPT-OSS-20B via Hugging Face Inference Providers |
+| Authentication | JWT, bcrypt |
+| Tools | Git, GitHub, Axios |
 
-- 📄 Document Management
-- 🤖 AI Tutor
-- 🧠 Retrieval-Augmented Generation
-- 📝 Smart Quizzes
-- 🃏 AI Flashcards
-- 📊 Learning Progress
-- 🔐 Secure Authentication
-- 🎨 Modern Responsive UI
+## How RAG Works
 
----
+StudyMate AI uses Retrieval-Augmented Generation to provide answers based on uploaded study materials.
 
-# ✨ Features
+1. Document Upload – User uploads a document.
+2. Text Extraction – Content is extracted from the file.
+3. Text Chunking – Extracted text is divided into smaller chunks.
+4. Embedding Generation – Chunks are converted into vector embeddings.
+5. Vector Storage – Embeddings are stored using FAISS.
+6. Semantic Search – Relevant chunks are retrieved for a user's question.
+7. AI Generation – The retrieved context is used to generate an answer.
 
-## 📄 Knowledge Base
+## System Architecture
 
-Upload your personal study materials and create an AI-powered knowledge base.
+```text
+       React + Vite
+            |
+            | REST API
+            v
+      Node.js + Express
+            |
+       +----+-----+
+       |          |
+       v          v
+    MongoDB    Python FastAPI
+                   |
+                RAG Service
+                   |
+             +-----+------+
+             |            |
+             v            v
+           FAISS     Hugging Face
+                    Inference API
+```
 
-### Supported Formats
+## Project Structure
 
-- PDF
-- DOCX
-- PPTX
-- TXT
+```text
+StudyMate-AI/
+│
+├── client/                 # React frontend
+│   └── src/
+│       ├── components/
+│       ├── pages/
+│       ├── services/
+│       └── store/
+│
+├── server/                 # Node.js backend
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   └── services/
+│
+├── rag/                    # Python RAG service
+│   ├── embeddings/
+│   ├── loaders/
+│   ├── services/
+│   ├── vectorstore/
+│   ├── main.py
+│   └── requirements.txt
+│
+└── README.md
+```
 
-### Document Processing Pipeline
+## Getting Started
 
-1. Document Upload
-2. Text Extraction
-3. Text Chunking
-4. Embedding Generation
-5. FAISS Vector Storage
-6. Semantic Search
-7. AI Response Generation
+### Prerequisites
 
----
-
-## 🤖 AI Tutor
-
-Ask questions related to your uploaded learning material.
-
-The AI Tutor uses Retrieval-Augmented Generation to retrieve relevant information from your documents before generating an answer.
-
-### Example
-
-    User:
-    Explain the difference between TCP and UDP.
-
-    StudyMate AI:
-    TCP is connection-oriented and provides reliable,
-    ordered delivery, while UDP is connectionless and
-    focuses on faster transmission with lower overhead.
-
----
-
-## 📝 Smart Quiz
-
-Generate AI-powered quizzes from your study material.
-
-### Features
-
-- Multiple-choice questions
-- Configurable question count
-- Answer validation
-- Explanations
-- Score calculation
-- Quiz history
-
-### Example
-
-    Question:
-    Which protocol is connection-oriented?
-
-    A. UDP
-    B. TCP
-    C. IP
-    D. HTTP
-
-    Answer:
-    TCP
-
----
-
-## 🃏 AI Flashcards
-
-Generate flashcards automatically from uploaded documents.
-
-Each flashcard contains:
-
-    Front:
-    What is RAG?
-
-    Back:
-    Retrieval-Augmented Generation combines
-    information retrieval with language generation
-    to produce context-aware responses.
-
----
-
-## 📊 Dashboard
-
-The dashboard provides an overview of the user's learning activity.
-
-It includes:
-
-- Total documents
-- AI conversations
-- Learning tools
-- Workspace activity
-- Learning status
-
----
-
-## 🔐 Authentication & Security
-
-StudyMate AI uses secure authentication with:
-
-- JWT authentication
-- bcrypt password hashing
-- Protected React routes
-- Express authentication middleware
-- User-specific document access
-
-Passwords are never stored in plain text.
-
----
-
-# 🏗️ System Architecture
-
-    ┌────────────────────────┐
-    │      React Client      │
-    │     Vite + Tailwind    │
-    └────────────┬───────────┘
-                 │
-                 │ REST API
-                 ▼
-    ┌────────────────────────┐
-    │     Node.js Server     │
-    │    Express + MongoDB   │
-    └──────────┬─────────────┘
-               │
-      ┌────────┴─────────────┐
-      │                      │
-      ▼                      ▼
-    ┌──────────────┐   ┌──────────────────┐
-    │   MongoDB    │   │   Python FastAPI │
-    │     Atlas    │   │    RAG Service   │
-    └──────────────┘   └────────┬─────────┘
-                                │
-                     ┌──────────┴──────────┐
-                     │                     │
-                     ▼                     ▼
-              ┌────────────┐       ┌─────────────┐
-              │   FAISS    │       │ Hugging Face│
-              │ Vector DB  │       │     LLM     │
-              └────────────┘       └─────────────┘
-
----
-
-# 🧠 RAG Pipeline
-
-StudyMate AI uses Retrieval-Augmented Generation to answer questions using the user's uploaded documents.
-
-    Uploaded Document
-           │
-           ▼
-    ┌──────────────────┐
-    │ Document Loader   │
-    └────────┬─────────┘
-             │
-             ▼
-    ┌──────────────────┐
-    │ Text Extraction  │
-    └────────┬─────────┘
-             │
-             ▼
-    ┌──────────────────┐
-    │ Text Chunking    │
-    └────────┬─────────┘
-             │
-             ▼
-    ┌──────────────────┐
-    │ Embeddings       │
-    │ MiniLM           │
-    └────────┬─────────┘
-             │
-             ▼
-    ┌──────────────────┐
-    │ FAISS Vectorstore│
-    └────────┬─────────┘
-             │
-        User Question
-             │
-             ▼
-    ┌──────────────────┐
-    │ Semantic Search  │
-    └────────┬─────────┘
-             │
-             ▼
-    ┌──────────────────┐
-    │ Retrieved Context│
-    └────────┬─────────┘
-             │
-             ▼
-    ┌──────────────────┐
-    │   LLM Generation │
-    └────────┬─────────┘
-             │
-             ▼
-        AI Response
-
----
-
-# 🛠️ Technology Stack
-
-## Frontend
-
-- React.js
-- Vite
-- Tailwind CSS
-- Framer Motion
-- Lucide React
-- React Router
-- Axios
-
-## Backend
-
-- Node.js
-- Express.js
+- Node.js and npm
+- Python 3.10+
 - MongoDB
-- Mongoose
-- Multer
+- Hugging Face access token with Inference Providers access
 
-## AI / RAG
+### 1. Clone the Repository
 
-- Python
-- FastAPI
-- LangChain
-- Hugging Face
-- FAISS
-- Sentence Transformers
-- Retrieval-Augmented Generation
+```bash
+git clone https://github.com/pranavvv-git/StudyMate-AI.git
+cd StudyMate-AI
+```
 
-## Authentication
+### 2. Install Frontend Dependencies
 
-- JSON Web Tokens (JWT)
-- bcrypt
-- Protected React Routes
-- Express Authentication Middleware
+```bash
+cd client
+npm install
+```
 
----
+Create `client/.env`:
 
-# 🧠 AI Components
+```env
+VITE_API_URL=http://localhost:5000/api
+```
 
-## Embedding Model
+### 3. Install Backend Dependencies
 
-    sentence-transformers/all-MiniLM-L6-v2
+```bash
+cd ../server
+npm install
+```
 
-Used to convert document chunks and search queries into vector embeddings.
+Create `server/.env` and configure:
 
-## Vector Store
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+RAG_URL=http://127.0.0.1:8000
+```
 
-    FAISS
+### 4. Set Up the RAG Service
 
-Used to store embeddings and perform semantic similarity search.
+```bash
+cd ../rag
+python -m venv venv
+```
 
-## Language Model
+Activate the environment on Windows:
 
-    openai/gpt-oss-20b
-
-Used through Hugging Face Inference Providers with Together for:
-
-- AI Tutor responses
-- Quiz generation
-- Flashcard generation
-
----
-
-# 🔌 API Overview
-
-## Authentication
-
-    POST /api/auth/register
-    POST /api/auth/login
-    GET  /api/auth/me
-
-## Documents
-
-    POST   /api/documents/upload
-    GET    /api/documents
-    DELETE /api/documents/:id
-
-## AI Tutor
-
-    POST /api/chat
-
-## Quizzes
-
-    POST /api/quizzes/generate
-    POST /api/quizzes/submit
-    GET  /api/quizzes
-
-## Flashcards
-
-    POST /api/flashcards/generate
-    GET  /api/flashcards
-
-## Dashboard
-
-    GET /api/dashboard/stats
-
-## RAG Service
-
-    GET  /api/health
-    POST /api/index-document
-    GET  /api/search
-    POST /api/chat
-    POST /api/generate-quiz
-    POST /api/generate-flashcards
-
----
-
-# 📁 Project Structure
-
-    StudyMate AI/
-    │
-    ├── client/
-    │   ├── src/
-    │   │   ├── components/
-    │   │   │   ├── Navbar.jsx
-    │   │   │   ├── Sidebar.jsx
-    │   │   │   ├── ProtectedRoute.jsx
-    │   │   │   ├── AppLayout.jsx
-    │   │   │   ├── DocumentUpload.jsx
-    │   │   │   ├── DocumentList.jsx
-    │   │   │   ├── ChatBox.jsx
-    │   │   │   ├── ChatMessage.jsx
-    │   │   │   ├── ChatMessages.jsx
-    │   │   │   ├── QuizCard.jsx
-    │   │   │   ├── QuizResult.jsx
-    │   │   │   ├── Flashcard.jsx
-    │   │   │   └── Loader.jsx
-    │   │   │
-    │   │   ├── pages/
-    │   │   │   ├── Login.jsx
-    │   │   │   ├── Register.jsx
-    │   │   │   ├── Dashboard.jsx
-    │   │   │   ├── Documents.jsx
-    │   │   │   ├── Chat.jsx
-    │   │   │   ├── Quiz.jsx
-    │   │   │   ├── Flashcards.jsx
-    │   │   │   ├── Progress.jsx
-    │   │   │   └── Profile.jsx
-    │   │   │
-    │   │   ├── services/
-    │   │   │   └── api.js
-    │   │   │
-    │   │   ├── store/
-    │   │   │   └── authStore.js
-    │   │   │
-    │   │   ├── App.jsx
-    │   │   ├── main.jsx
-    │   │   └── index.css
-    │   │
-    │   └── .env
-    │
-    ├── server/
-    │   ├── config/
-    │   │   └── db.js
-    │   │
-    │   ├── controllers/
-    │   │   ├── authController.js
-    │   │   ├── documentController.js
-    │   │   ├── chatController.js
-    │   │   ├── quizController.js
-    │   │   └── flashcardController.js
-    │   │
-    │   ├── models/
-    │   │   ├── User.js
-    │   │   ├── Document.js
-    │   │   ├── Conversation.js
-    │   │   ├── Quiz.js
-    │   │   └── Flashcard.js
-    │   │
-    │   ├── routes/
-    │   │   ├── authRoutes.js
-    │   │   ├── documentRoutes.js
-    │   │   ├── chatRoutes.js
-    │   │   ├── quizRoutes.js
-    │   │   ├── flashcardRoutes.js
-    │   │   └── dashboardRoutes.js
-    │   │
-    │   ├── middleware/
-    │   │   ├── authMiddleware.js
-    │   │   ├── errorMiddleware.js
-    │   │   └── uploadMiddleware.js
-    │   │
-    │   ├── services/
-    │   │   └── ragService.js
-    │   │
-    │   ├── uploads/
-    │   ├── .env
-    │   └── server.js
-    │
-    └── rag/
-        ├── loaders/
-        │   ├── pdf_loader.py
-        │   ├── docx_loader.py
-        │   ├── pptx_loader.py
-        │   └── text_loader.py
-        │
-        ├── embeddings/
-        │   └── embedding.py
-        │
-        ├── vectorstore/
-        │   └── faiss_store.py
-        │
-        ├── services/
-        │   ├── document_service.py
-        │   ├── rag_service.py
-        │   ├── quiz_service.py
-        │   ├── flashcard_service.py
-        │   └── summary_service.py
-        │
-        ├── vectorstore_data/
-        ├── main.py
-        ├── requirements.txt
-        ├── .env
-        └── venv/
-
----
-
-# ⚙️ Local Setup
-
-## 1. Clone the Repository
-
-    git clone https://github.com/YOUR_USERNAME/studymate-ai.git
-    cd studymate-ai
-
-## 2. Install Frontend Dependencies
-
-    cd client
-    npm install
-
-## 3. Install Backend Dependencies
-
-    cd ../server
-    npm install
-
-## 4. Create the Python Environment
-
-    cd ../rag
-    python -m venv venv
-
-### Windows
-
-    .\venv\Scripts\activate
-
-### Linux / macOS
-
-    source venv/bin/activate
+```powershell
+.\venv\Scripts\activate
+```
 
 Install dependencies:
 
-    pip install -r requirements.txt
+```bash
+pip install -r requirements.txt
+```
 
----
+Create `rag/.env`:
 
-# 🔐 Environment Variables
+```env
+HF_TOKEN=your_huggingface_token
+LLM_MODEL=openai/gpt-oss-20b
+HF_PROVIDER=together
+```
 
-Never commit your `.env` files.
+### 5. Run the Application
 
-## Client
+Start each service in a separate terminal.
 
-Create:
+**RAG Service:**
 
-    client/.env
+```bash
+cd rag
+uvicorn main:app --reload --port 8000
+```
 
-Add:
+**Backend:**
 
-    VITE_API_URL=http://localhost:5000/api
+```bash
+cd server
+npm run dev
+```
 
-For a deployed frontend, set `VITE_API_URL` to the deployed Node API URL ending
-in `/api` (for example, `https://your-api.example.com/api`) and rebuild the
-frontend. Set the API service's `CLIENT_URL` to the frontend origin so browser
-requests pass the API's CORS allowlist. Multiple frontend origins can be
-comma-separated.
+**Frontend:**
 
-## Server
+```bash
+cd client
+npm run dev
+```
 
-Create:
+Open the frontend URL displayed by Vite in your browser.
 
-    server/.env
+## API Overview
 
-Add:
+| Module | Endpoints |
+|---|---|
+| Authentication | `/api/auth/register`, `/api/auth/login`, `/api/auth/me` |
+| Documents | `/api/documents/upload`, `/api/documents` |
+| AI Tutor | `/api/chat` |
+| Quizzes | `/api/quizzes/generate`, `/api/quizzes/submit` |
+| Flashcards | `/api/flashcards/generate`, `/api/flashcards` |
+| Dashboard | `/api/dashboard/stats` |
 
-    MONGO_URI=your_mongodb_connection_string
-    JWT_SECRET=your_jwt_secret
-    RAG_URL=http://127.0.0.1:8000
+## Deployment
 
-For Render deployments, set `RAG_INTERNAL_URL` on the API service to the RAG
-service's internal address (from its Dashboard **Connect → Internal** page),
-for example `http://studymate-rag:10000`. The API prefers this address over
-`RAG_URL`. Both services must be in the same Render workspace and region, and
-the RAG service must be on a plan that can receive private-network requests.
+The application supports a multi-service deployment architecture:
 
-## Free Render deployment (API and RAG in one service)
+- **Frontend:** Vercel or Render
+- **Backend:** Render or Railway
+- **Database:** MongoDB Atlas
+- **RAG Service:** Render or another Python-compatible hosting platform
 
-Render Free web services cannot receive private-network requests from another
-Free web service, and public RAG requests can hit Free inbound rate limits.
-This repository includes a Docker deployment that runs the Node API and FastAPI
-RAG process inside one Free web service. It sends indexing requests to
-`http://127.0.0.1:8000`, stores original uploaded files in MongoDB, and stores
-the FAISS index in MongoDB GridFS so both survive a Render restart.
+A Docker-based deployment option is also included for running the Node.js API and Python RAG service together.
 
-Create a new Render Web Service from the repository, choose **Docker**, keep the
-root directory at the repository root, and select the **Free** instance plan.
-Copy the current API service's `MONGO_URI` and `JWT_SECRET`, and the current RAG
-service's `HF_TOKEN`, `HF_PROVIDER`, and `LLM_MODEL` into the new service's
-environment. Set `CLIENT_URL` to the deployed frontend origin. The Docker image
-sets `RAG_URL=http://127.0.0.1:8000` and `RAG_LOCAL_ONLY=true` automatically.
+Production deployments require properly configured environment variables and service URLs.
 
-After the new service is healthy, set the frontend's `VITE_API_URL` to the new
-service URL ending in `/api`, then rebuild/redeploy the frontend. Keep the old
-services until the new API and document indexing work, then stop the old API
-and RAG services to preserve the workspace's Free instance hours.
+## What I Learned
 
-## RAG
-
-Create:
-
-    rag/.env
-
-Add:
-
-    HF_TOKEN=your_huggingface_token
-    LLM_MODEL=openai/gpt-oss-20b
-    HF_PROVIDER=together
-
-`HF_TOKEN` must be a valid Hugging Face User Access Token with Inference Providers access. If deployed, update the `HF_TOKEN` environment variable in the RAG service's hosting dashboard and restart/redeploy that service. Do not commit the token to this repository.
-
----
-
-# ▶️ Running the Application
-
-StudyMate AI uses three services during local development.
-
-## Start RAG Service
-
-    cd rag
-    uvicorn main:app --reload --port 8000
-
-## Start Node.js Server
-
-Open another terminal:
-
-    cd server
-    npm run dev
-
-## Start React Client
-
-Open another terminal:
-
-    cd client
-    npm run dev
-
-Then open the Vite URL shown in the terminal.
-
----
-
-# 🔒 Security
-
-Never commit sensitive information.
-
-Recommended `.gitignore`:
-
-    node_modules/
-    .env
-    .env.*
-    venv/
-    __pycache__/
-    *.pyc
-    uploads/
-
-Never expose:
-
-- MongoDB credentials
-- JWT secrets
-- Hugging Face tokens
-- API keys
-- Private environment variables
-
----
-
-# 🚀 Deployment Architecture
-
-StudyMate AI can be deployed as three separate services:
-
-    ┌─────────────────────┐
-    │   React Frontend    │
-    │      Static Site    │
-    └──────────┬──────────┘
-               │
-               ▼
-    ┌─────────────────────┐
-    │   Node + Express    │
-    │      API Server     │
-    └──────────┬──────────┘
-               │
-      ┌────────┴──────────┐
-      │                   │
-      ▼                   ▼
-    ┌─────────────┐   ┌────────────────┐
-    │ MongoDB     │   │ Python FastAPI │
-    │   Atlas     │   │   RAG Service  │
-    └─────────────┘   └───────┬────────┘
-                              │
-                              ▼
-                       Hugging Face
-                           + FAISS
-
-Possible deployment platforms include:
-
-- Render
-- Vercel
-- Railway
-- Other cloud platforms supporting Node.js and Python services
-
-Production environment variables must use deployed service URLs instead of localhost URLs.
-
----
-
-# 📈 Future Improvements
-
-- Persistent cloud storage for uploaded documents
-- Document-specific vector indexes
-- Cloud vector database integration
-- Conversation history
-- Advanced progress analytics
-- Personalized learning recommendations
-- Spaced repetition
-- Streaming AI responses
-- Multi-document conversations
-- Search and filtering
-- AI-generated summaries
-- Background document processing
-- Redis caching
-- Background workers
-- Rate limiting
-- Role-based access control
-- Dockerized deployment
-
----
-
-# 🎯 What I Learned
-
-Building StudyMate AI provided hands-on experience with:
-
-- Full-stack application architecture
-- React development
-- REST APIs
-- Node.js and Express
-- MongoDB and Mongoose
-- JWT authentication
-- Password hashing
-- File uploads
-- Document processing
-- Python FastAPI
-- LangChain
-- Hugging Face
-- Embeddings
-- FAISS vector search
+- Full-stack application development
+- REST API design and integration
+- Authentication and authorization
+- Document processing and file uploads
+- Embeddings and vector search
 - Retrieval-Augmented Generation
-- LLM integration
-- Multi-service architecture
-- Frontend state management
-- Responsive UI development
+- LLM integration using Hugging Face
+- Building and connecting multiple services
 
-The project helped me understand how Generative AI can be integrated into a practical full-stack application rather than being used only as a standalone AI demo.
+## Future Improvements
 
----
+- Persistent cloud document storage
+- Advanced learning analytics
+- Personalized learning recommendations
+- Spaced repetition for flashcards
+- Streaming AI responses
+- Background document processing
 
-# 🌟 Why StudyMate AI?
+## Author
 
-Traditional studying often requires students to switch between:
-
-    Documents
-    Notes
-    Search
-    Quizzes
-    Flashcards
-    AI Tools
-
-StudyMate AI brings these capabilities into one learning environment:
-
-             ┌────────────────────┐
-             │    StudyMate AI    │
-             └─────────┬──────────┘
-                       │
-       ┌───────────────┼────────────────┐
-       │               │                │
-       ▼               ▼                ▼
-   Documents       AI Tutor          Practice
-                                      │
-                              ┌───────┴───────┐
-                              ▼               ▼
-                            Quiz         Flashcards
-
-The goal is to make studying more interactive, contextual, and personalized using the student's own learning material.
-
----
-
-# 👨‍💻 Author
-
-## Rohan Kumar Pathak
+Pranav Thakur
 
 Computer Science Engineering Student
 
-### Interests
+Interests: Full-Stack Development, Backend Development, Generative AI and RAG Systems.
 
-- Full-Stack Development
-- Backend Development
-- Generative AI
-- RAG Systems
-- AI-powered Applications
-
-### GitHub
-
-https://github.com/Rohanpathak-18
+- GitHub: [pranavvv-git](https://github.com/pranavvv-git)
 
 ---
 
-# ⭐ Support
+If you find this project interesting, consider giving it a ⭐ on GitHub.
 
-If you find this project useful or interesting, consider giving the repository a ⭐.
-
-Feedback and suggestions are welcome!
-
----
-
-# 📄 License
-
-This project is currently intended for educational and portfolio purposes.
-
-
-
+License: Educational and portfolio purposes.
