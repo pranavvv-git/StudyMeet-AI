@@ -1,10 +1,10 @@
-# StudyMate AI
+# StudyMeet AI
 
 An AI-powered personalized learning platform that transforms your study materials into an interactive learning experience using Generative AI and Retrieval-Augmented Generation (RAG).
 
 ## Overview
 
-StudyMate AI is a full-stack learning platform where students can upload their study materials and use AI-powered tools to understand and practice their subjects.
+StudyMeet AI is a full-stack learning platform where students can upload their study materials and use AI-powered tools to understand and practice their subjects.
 
 Upload PDF, DOCX, PPTX, and TXT files to create a personal knowledge base and interact with your documents.
 
@@ -34,7 +34,7 @@ Upload PDF, DOCX, PPTX, and TXT files to create a personal knowledge base and in
 
 ## How RAG Works
 
-StudyMate AI uses Retrieval-Augmented Generation to provide answers based on uploaded study materials.
+StudyMeet AI uses Retrieval-Augmented Generation to provide answers based on uploaded study materials.
 
 1. Document Upload – User uploads a document.
 2. Text Extraction – Content is extracted from the file.
@@ -49,14 +49,15 @@ StudyMate AI uses Retrieval-Augmented Generation to provide answers based on upl
 ```text
        React + Vite
             |
-            | REST API
+        REST API
+            |
             v
       Node.js + Express
             |
        +----+-----+
        |          |
        v          v
-    MongoDB    Python FastAPI
+    MongoDB   Python FastAPI
                    |
                 RAG Service
                    |
@@ -64,13 +65,13 @@ StudyMate AI uses Retrieval-Augmented Generation to provide answers based on upl
              |            |
              v            v
            FAISS     Hugging Face
-                    Inference API
+                     Inference API
 ```
 
 ## Project Structure
 
 ```text
-StudyMate-AI/
+StudyMeet-AI/
 │
 ├── client/                 # React frontend
 │   └── src/
@@ -110,8 +111,8 @@ StudyMate-AI/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/pranavvv-git/StudyMate-AI.git
-cd StudyMate-AI
+git clone https://github.com/pranavvv-git/StudyMeet-AI.git
+cd StudyMeet-AI
 ```
 
 ### 2. Install Frontend Dependencies
@@ -243,7 +244,7 @@ Production deployments require properly configured environment variables and ser
 
 ## Author
 
-Pranav Thakur
+**Pranav Thakur**
 
 Computer Science Engineering Student
 
