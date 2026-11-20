@@ -5,7 +5,11 @@ const FormData = require("form-data");
 const normalizeUrl = (url) => {
   const value = (url || "").trim();
   if (!value) return "";
-  return (/^[a-z]+:\/\//i.test(value) ? value : `http://${value}`).replace(/\/+$/, "");
+
+  return (/^[a-z]+:\/\//i.test(value)
+    ? value
+    : `http://${value}`
+  ).replace(/\/+$/, "");
 };
 
 // Render internal URLs are preferred, with the public service URL as a fallback.

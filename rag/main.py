@@ -1,6 +1,9 @@
 import os
 import shutil
 import tempfile
+from dotenv import load_dotenv
+
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from pydantic import BaseModel

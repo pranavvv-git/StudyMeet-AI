@@ -133,6 +133,7 @@ const login = async (req, res, next) => {
       },
     });
   } catch (error) {
+    console.error("LOGIN ERROR:", error);
     next(error);
   }
 };

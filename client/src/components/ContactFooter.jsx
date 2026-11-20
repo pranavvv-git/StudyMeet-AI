@@ -1,8 +1,8 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const CONTACT_EMAIL = "rohanpathak9813@gmail.com";
-const CONTACT_PHONE = "6392129011";
+const CONTACT_EMAIL = "pranavthakur8907@gmail.com";
+const CONTACT_PHONE = "8287647590";
 
 const ContactFooter = ({ showContactForm = true }) => {
   const handleContactSubmit = (event) => {
@@ -61,7 +61,7 @@ const ContactFooter = ({ showContactForm = true }) => {
       </div>
       <div className="footer-bottom">
         <span>© {new Date().getFullYear()} StudyMate AI</span>
-        <span className="footer-credit">Designed with love ❤️ by Rohan</span>
+        <span className="footer-credit">Designed with love ❤️ by PranavThakur</span>
       </div>
     </footer>
   );

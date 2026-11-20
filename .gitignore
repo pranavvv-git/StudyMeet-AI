@@ -3,3 +3,15 @@ venv/
 .env
 __pycache__/
 *.pyc
+# Uploaded files and generated data
+uploads/
+rag/vectorstore_data/
+rag/__pycache__/
+server/uploads/
+
+# Environment files
+.env.*
+!.env.example
+
+# Python virtual environments
+rag/venv/
